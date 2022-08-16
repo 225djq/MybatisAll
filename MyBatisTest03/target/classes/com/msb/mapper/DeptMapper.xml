@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.msb.mapper.DeptMapper">
+
+    <resultMap id="DeptJoinEmps" type="dept">
+        <id column="deptno" property="deptno"></id>
+        <result column="dname" property="dname"></result>
+        <result column="loc" property="loc"></result>
+        <collection property="empList" ofType="emp">
+            <id column="empno" property="empno"></id>
+            <result column="ename" property="ename"/>
+            <result column="job" property="job"/>
+            <result column="mgr" property="mgr"/>
+            <result column="hiredate" property="hiredate"/>
+            <result column="sal" property="sal"/>
+            <result column="comm" property="comm"/>
+            <result column="deptno" property="deptno"/>
+        </collection>
+
+
+    </resultMap>
+    
+    <select id="findDeptJoinEmpByDeptno" resultMap="DeptJoinEmps">
+        select * from dept d left join emp e on d.deptno = e.deptno where d.deptno = #{deptno}
+    </select>
+
+</mapper>

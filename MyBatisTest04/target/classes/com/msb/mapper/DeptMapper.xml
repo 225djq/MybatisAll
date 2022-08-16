@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.msb.mapper.DeptMapper">
+
+    <resultMap id="DeptJoinEmps" type="dept">
+        <id column="deptno" property="deptno"></id>
+        <result column="dname" property="dname"></result>
+        <result column="loc" property="loc"></result>
+        <collection property="empList"
+                    select="com.msb.mapper.EmpMapper.findByEmpno"
+                    javaType="list"
+                    column="deptno"
+                    jdbcType="INTEGER"
+                    fetchType="lazy"
+        />
+    </resultMap>
+    
+    <select id="findByDeptno" resultMap="DeptJoinEmps">
+        select * from dept where deptno = #{deptno}
+    </select>
+
+</mapper>
